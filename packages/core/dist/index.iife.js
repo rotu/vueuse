@@ -6115,6 +6115,7 @@ var VueDemi = (function (VueDemi, Vue, VueCompositionAPI) {
     const data = vueDemi.ref(null);
     const status = vueDemi.ref("CLOSED");
     const wsRef = vueDemi.ref();
+    const urlRef = shared.resolveRef(url);
     let heartbeatPause;
     let heartbeatResume;
     let explicitlyClosed = false;
@@ -6151,7 +6152,7 @@ var VueDemi = (function (VueDemi, Vue, VueCompositionAPI) {
     const _init = () => {
       if (explicitlyClosed)
         return;
-      const ws = new WebSocket(url, protocols);
+      const ws = new WebSocket(urlRef.value, protocols);
       wsRef.value = ws;
       status.value = "CONNECTING";
       ws.onopen = () => {
@@ -6210,8 +6211,6 @@ var VueDemi = (function (VueDemi, Vue, VueCompositionAPI) {
       heartbeatPause = pause;
       heartbeatResume = resume;
     }
-    if (immediate)
-      _init();
     if (autoClose) {
       useEventListener(window, "beforeunload", () => close());
       shared.tryOnScopeDispose(close);
@@ -6222,6 +6221,8 @@ var VueDemi = (function (VueDemi, Vue, VueCompositionAPI) {
       retried = 0;
       _init();
     };
+    if (immediate)
+      vueDemi.watch(urlRef, open, { immediate: true });
     return {
       data,
       status,

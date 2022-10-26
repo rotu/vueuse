@@ -2239,7 +2239,7 @@ var functions$1 = [
 	{
 		name: "useWebSocket",
 		"package": "core",
-		lastUpdated: 1666677568000,
+		lastUpdated: 1666814987000,
 		docs: "https://vueuse.org/core/useWebSocket/",
 		category: "Network",
 		description: "reactive [WebSocket](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket/WebSocket) client"

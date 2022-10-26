@@ -6002,6 +6002,7 @@ function useWebSocket(url, options = {}) {
   const data = ref(null);
   const status = ref("CLOSED");
   const wsRef = ref();
+  const urlRef = resolveRef(url);
   let heartbeatPause;
   let heartbeatResume;
   let explicitlyClosed = false;
@@ -6038,7 +6039,7 @@ function useWebSocket(url, options = {}) {
   const _init = () => {
     if (explicitlyClosed)
       return;
-    const ws = new WebSocket(url, protocols);
+    const ws = new WebSocket(urlRef.value, protocols);
     wsRef.value = ws;
     status.value = "CONNECTING";
     ws.onopen = () => {
@@ -6097,8 +6098,6 @@ function useWebSocket(url, options = {}) {
     heartbeatPause = pause;
     heartbeatResume = resume;
   }
-  if (immediate)
-    _init();
   if (autoClose) {
     useEventListener(window, "beforeunload", () => close());
     tryOnScopeDispose(close);
@@ -6109,6 +6108,8 @@ function useWebSocket(url, options = {}) {
     retried = 0;
     _init();
   };
+  if (immediate)
+    watch(urlRef, open, { immediate: true });
   return {
     data,
     status,

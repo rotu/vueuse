@@ -4237,7 +4237,7 @@ interface UseWebSocketReturn<T> {
  * @see https://vueuse.org/useWebSocket
  * @param url
  */
-declare function useWebSocket<Data = any>(url: string, options?: UseWebSocketOptions): UseWebSocketReturn<Data>;
+declare function useWebSocket<Data = any>(url: MaybeComputedRef<string | URL>, options?: UseWebSocketOptions): UseWebSocketReturn<Data>;
 
 interface UseWebWorkerReturn<Data = any> {
     data: Ref<Data>;
