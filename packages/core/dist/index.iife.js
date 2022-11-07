@@ -272,7 +272,7 @@ var VueDemi = (function (VueDemi, Vue, VueCompositionAPI) {
       detectIframe && useEventListener(window, "blur", (event) => {
         var _a;
         const el = unrefElement(target);
-        if (((_a = document.activeElement) == null ? void 0 : _a.tagName) === "IFRAME" && !(el == null ? void 0 : el.contains(document.activeElement)))
+        if (((_a = window.document.activeElement) == null ? void 0 : _a.tagName) === "IFRAME" && !(el == null ? void 0 : el.contains(window.document.activeElement)))
           handler(event);
       })
     ].filter(Boolean);
@@ -2372,16 +2372,26 @@ var VueDemi = (function (VueDemi, Vue, VueCompositionAPI) {
       return Object.fromEntries([...headers.entries()]);
     return headers;
   }
-  function chainCallbacks(...callbacks) {
-    return async (ctx) => {
-      await callbacks.reduce((prevCallback, callback) => prevCallback.then(async () => {
-        if (callback)
-          ctx = __spreadValues$c(__spreadValues$c({}, ctx), await callback(ctx));
-      }), Promise.resolve());
-      return ctx;
-    };
+  function combineCallbacks(combination, ...callbacks) {
+    if (combination === "overwrite") {
+      return async (ctx) => {
+        const callback = callbacks[callbacks.length - 1];
+        if (callback !== void 0)
+          await callback(ctx);
+        return ctx;
+      };
+    } else {
+      return async (ctx) => {
+        await callbacks.reduce((prevCallback, callback) => prevCallback.then(async () => {
+          if (callback)
+            ctx = __spreadValues$c(__spreadValues$c({}, ctx), await callback(ctx));
+        }), Promise.resolve());
+        return ctx;
+      };
+    }
   }
   function createFetch(config = {}) {
+    const _combination = config.combination || "chain";
     const _options = config.options || {};
     const _fetchOptions = config.fetchOptions || {};
     function useFactoryFetch(url, ...args) {
@@ -2391,9 +2401,9 @@ var VueDemi = (function (VueDemi, Vue, VueCompositionAPI) {
       if (args.length > 0) {
         if (isFetchOptions(args[0])) {
           options = __spreadProps$3(__spreadValues$c(__spreadValues$c({}, options), args[0]), {
-            beforeFetch: chainCallbacks(_options.beforeFetch, args[0].beforeFetch),
-            afterFetch: chainCallbacks(_options.afterFetch, args[0].afterFetch),
-            onFetchError: chainCallbacks(_options.onFetchError, args[0].onFetchError)
+            beforeFetch: combineCallbacks(_combination, _options.beforeFetch, args[0].beforeFetch),
+            afterFetch: combineCallbacks(_combination, _options.afterFetch, args[0].afterFetch),
+            onFetchError: combineCallbacks(_combination, _options.onFetchError, args[0].onFetchError)
           });
         } else {
           fetchOptions = __spreadProps$3(__spreadValues$c(__spreadValues$c({}, fetchOptions), args[0]), {
@@ -2403,9 +2413,9 @@ var VueDemi = (function (VueDemi, Vue, VueCompositionAPI) {
       }
       if (args.length > 1 && isFetchOptions(args[1])) {
         options = __spreadProps$3(__spreadValues$c(__spreadValues$c({}, options), args[1]), {
-          beforeFetch: chainCallbacks(_options.beforeFetch, args[1].beforeFetch),
-          afterFetch: chainCallbacks(_options.afterFetch, args[1].afterFetch),
-          onFetchError: chainCallbacks(_options.onFetchError, args[1].onFetchError)
+          beforeFetch: combineCallbacks(_combination, _options.beforeFetch, args[1].beforeFetch),
+          afterFetch: combineCallbacks(_combination, _options.afterFetch, args[1].afterFetch),
+          onFetchError: combineCallbacks(_combination, _options.onFetchError, args[1].onFetchError)
         });
       }
       return useFetch(computedUrl, fetchOptions, options);

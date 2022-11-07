@@ -1682,6 +1682,7 @@ interface UseFetchReturn<T> {
     arrayBuffer(): UseFetchReturn<ArrayBuffer> & PromiseLike<UseFetchReturn<ArrayBuffer>>;
     formData(): UseFetchReturn<FormData> & PromiseLike<UseFetchReturn<FormData>>;
 }
+declare type Combination = 'overwrite' | 'chain';
 interface BeforeFetchContext {
     /**
      * The computed url of the current request
@@ -1760,6 +1761,11 @@ interface CreateFetchOptions {
      * The base URL that will be prefixed to all urls
      */
     baseUrl?: MaybeComputedRef<string>;
+    /**
+     * Determine the inherit behavior for beforeFetch, afterFetch, onFetchError
+     * @default 'chain'
+     */
+    combination?: Combination;
     /**
      * Default Options for the useFetch function
      */

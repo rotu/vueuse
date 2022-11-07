@@ -4,13 +4,13 @@ import { resolveUnref, isClient, isString, noop, tryOnScopeDispose, directiveHoo
 
 const OnClickOutside = defineComponent({
   name: "OnClickOutside",
-  props: ["as"],
+  props: ["as", "options"],
   emits: ["trigger"],
   setup(props, { slots, emit }) {
     const target = ref();
     onClickOutside$1(target, (e) => {
       emit("trigger", e);
-    });
+    }, props.options);
     return () => {
       if (slots.default)
         return h(props.as || "div", { ref: target }, slots.default());
@@ -93,7 +93,7 @@ function onClickOutside(target, handler, options = {}) {
     detectIframe && useEventListener(window, "blur", (event) => {
       var _a;
       const el = unrefElement(target);
-      if (((_a = document.activeElement) == null ? void 0 : _a.tagName) === "IFRAME" && !(el == null ? void 0 : el.contains(document.activeElement)))
+      if (((_a = window.document.activeElement) == null ? void 0 : _a.tagName) === "IFRAME" && !(el == null ? void 0 : el.contains(window.document.activeElement)))
         handler(event);
     })
   ].filter(Boolean);

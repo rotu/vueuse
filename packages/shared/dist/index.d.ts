@@ -461,7 +461,7 @@ declare function resolveRef<T>(r: MaybeRef<T>): Ref<T>;
 declare function resolveRef<T>(r: T): Ref<T>;
 
 /**
- * Normalize value/ref/getter to `ref` or `computed`.
+ * Get the value of value/ref/getter.
  */
 declare function resolveUnref<T>(r: MaybeComputedRef<T>): T;
 

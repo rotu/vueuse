@@ -16,8 +16,6 @@ interface RenderableComponent {
     as?: Object | string;
 }
 
-declare const OnClickOutside: vue_demi.DefineComponent<RenderableComponent, {}, {}, {}, {}, vue_demi.ComponentOptionsMixin, vue_demi.ComponentOptionsMixin, {}, string, vue_demi.VNodeProps & vue_demi.AllowedComponentProps & vue_demi.ComponentCustomProps, Readonly<RenderableComponent>, {}>;
-
 declare type VueInstance = ComponentPublicInstance;
 declare type MaybeElementRef<T extends MaybeElement = MaybeElement> = MaybeRef<T>;
 declare type MaybeComputedElementRef<T extends MaybeElement = MaybeElement> = MaybeComputedRef<T>;
@@ -44,6 +42,11 @@ declare type OnClickOutsideHandler<T extends {
 } = {
     detectIframe: false;
 }> = (evt: T['detectIframe'] extends true ? PointerEvent | FocusEvent : PointerEvent) => void;
+
+interface OnClickOutsideProps extends RenderableComponent {
+    options?: OnClickOutsideOptions;
+}
+declare const OnClickOutside: vue_demi.DefineComponent<OnClickOutsideProps, {}, {}, {}, {}, vue_demi.ComponentOptionsMixin, vue_demi.ComponentOptionsMixin, {}, string, vue_demi.VNodeProps & vue_demi.AllowedComponentProps & vue_demi.ComponentCustomProps, Readonly<OnClickOutsideProps>, {}>;
 
 declare const vOnClickOutside: ObjectDirective<HTMLElement, OnClickOutsideHandler | [(evt: any) => void, OnClickOutsideOptions]>;
 
@@ -607,4 +610,4 @@ declare const UseWindowFocus: vue_demi.DefineComponent<{}, () => vue_demi.VNode<
 
 declare const UseWindowSize: vue_demi.DefineComponent<UseWindowSizeOptions, {}, {}, {}, {}, vue_demi.ComponentOptionsMixin, vue_demi.ComponentOptionsMixin, {}, string, vue_demi.VNodeProps & vue_demi.AllowedComponentProps & vue_demi.ComponentCustomProps, Readonly<UseWindowSizeOptions>, {}>;
 
-export { OnClickOutside, OnLongPress, OnLongPressProps, UseActiveElement, UseBattery, UseBrowserLocation, UseColorMode, UseDark, UseDeviceMotion, UseDeviceOrientation, UseDevicePixelRatio, UseDevicesList, UseDocumentVisibility, UseDraggable, UseDraggableProps, UseElementBounding, UseElementSize, UseElementVisibility, UseEyeDropper, UseFullscreen, UseGeolocation, UseIdle, UseImage, UseMouse, UseMouseInElement, UseMousePressed, UseNetwork, UseNow, UseObjectUrl, UseObjectUrlProps, UseOffsetPagination, UseOnline, UsePageLeave, UsePointer, UsePreferredColorScheme, UsePreferredContrast, UsePreferredDark, UsePreferredLanguages, UsePreferredReducedMotion, UseScreenSafeArea, UseTimeAgo, UseTimestamp, UseVirtualList, UseVirtualListProps, UseWindowFocus, UseWindowSize, vOnClickOutside as VOnClickOutside, vOnLongPress as VOnLongPress, vElementHover, vElementSize, vElementVisibility, vInfiniteScroll, vIntersectionObserver, vOnClickOutside, vOnKeyStroke, vOnLongPress, vScroll, vScrollLock };
+export { OnClickOutside, OnClickOutsideProps, OnLongPress, OnLongPressProps, UseActiveElement, UseBattery, UseBrowserLocation, UseColorMode, UseDark, UseDeviceMotion, UseDeviceOrientation, UseDevicePixelRatio, UseDevicesList, UseDocumentVisibility, UseDraggable, UseDraggableProps, UseElementBounding, UseElementSize, UseElementVisibility, UseEyeDropper, UseFullscreen, UseGeolocation, UseIdle, UseImage, UseMouse, UseMouseInElement, UseMousePressed, UseNetwork, UseNow, UseObjectUrl, UseObjectUrlProps, UseOffsetPagination, UseOnline, UsePageLeave, UsePointer, UsePreferredColorScheme, UsePreferredContrast, UsePreferredDark, UsePreferredLanguages, UsePreferredReducedMotion, UseScreenSafeArea, UseTimeAgo, UseTimestamp, UseVirtualList, UseVirtualListProps, UseWindowFocus, UseWindowSize, vOnClickOutside as VOnClickOutside, vOnLongPress as VOnLongPress, vElementHover, vElementSize, vElementVisibility, vInfiniteScroll, vIntersectionObserver, vOnClickOutside, vOnKeyStroke, vOnLongPress, vScroll, vScrollLock };

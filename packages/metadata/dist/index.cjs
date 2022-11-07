@@ -377,7 +377,7 @@ var functions$1 = [
 	{
 		name: "onClickOutside",
 		"package": "core",
-		lastUpdated: 1663296141000,
+		lastUpdated: 1667823039000,
 		component: true,
 		directive: true,
 		docs: "https://vueuse.org/core/onClickOutside/",
@@ -534,7 +534,7 @@ var functions$1 = [
 	{
 		name: "resolveUnref",
 		"package": "shared",
-		lastUpdated: 1657075685000,
+		lastUpdated: 1667054063000,
 		docs: "https://vueuse.org/shared/resolveUnref/",
 		category: "Reactivity",
 		description: "get the value of value/ref/getter",
@@ -1189,7 +1189,7 @@ var functions$1 = [
 	{
 		name: "useFetch",
 		"package": "core",
-		lastUpdated: 1665014132000,
+		lastUpdated: 1666882057000,
 		docs: "https://vueuse.org/core/useFetch/",
 		category: "Network",
 		description: "reactive [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) provides the ability to abort requests"
